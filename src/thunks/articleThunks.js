@@ -23,10 +23,19 @@ export const createArticle = createAsyncThunk('articles/createArticle', async (a
 });
 
 export const deleteArticle = createAsyncThunk('articles/deleteArticle', async (id) => {
-    const response = await Api.delete(`/articles/${id}`, {
+    await Api.delete(`/articles/${id}`, {
         headers: {
             Authorization: `Bearer ${getToken()}`
         }
     });
     return { _id: id };
+});
+
+export const editArticle = createAsyncThunk('articles/editArticle', async (article) => {
+    const response = await Api.put(`/articles/${article._id}`, article, {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        }
+    });
+    return response.data;
 });

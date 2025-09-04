@@ -5,7 +5,6 @@ import './pages.css';
 import { useNavigate } from 'react-router';
 import { deleteArticle } from '../thunks/articleThunks';
 
-
 const ArticleTable = () => {
     const dispatch = useDispatch();
     const articles = useSelector((state) => state.articles)
@@ -25,7 +24,10 @@ const ArticleTable = () => {
                         <p>{article.content}</p>
                     </div>
                     <div>
-                        <button>Edit</button>
+                        <button onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/articles/edit/${article._id}`);
+                        }}>Edit</button>
                         <button onClick={(e) => {
                             e.stopPropagation();
                             dispatch(deleteArticle(article._id));

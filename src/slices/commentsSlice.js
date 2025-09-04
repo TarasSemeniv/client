@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getComments } from '../thunks/commentsThunk';
+import { getComments, createComment } from '../thunks/commentsThunk';
 const initialState = {
     comments: [],
     status: 'idle', // idle, loading, success, failed
@@ -21,6 +21,9 @@ const commentsSlice = createSlice({
             .addCase(getComments.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;
+            })
+            .addCase(createComment.fulfilled, (state, action) => {
+                state.comments.push(action.payload);
             });
     }
 });

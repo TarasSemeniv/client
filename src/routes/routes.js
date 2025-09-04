@@ -8,6 +8,7 @@ import ArticleDetails from "../pages/ArticleDetails";
 import Register from "../pages/Register";
 import Profile from "../pages/Profile";
 import ArticleTable from "../pages/ArticleTable";
+import EditArticle from "../pages/EditArticle";
 
 const routes = createBrowserRouter([
     {
@@ -41,6 +42,10 @@ const routes = createBrowserRouter([
             {
                 path: "/articles/table",
                 element: <AuthRoute><ArticleTable /></AuthRoute>
+            },
+            {
+                path: "/articles/edit/:id",
+                element: <AuthRoute><EditArticle /></AuthRoute>
             }
         ]
     }

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { getArticle, getArticles, deleteArticle } from "../thunks/articleThunks"
+import { getArticle, getArticles, deleteArticle, editArticle } from "../thunks/articleThunks"
 
 const initialValues = {
     data: [],
@@ -43,6 +43,20 @@ const articleSlice = createSlice({
                 state.data = state.data.filter(article => article._id !== action.payload._id);
             })
             .addCase(deleteArticle.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.error.message;
+            })
+            .addCase(editArticle.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(editArticle.fulfilled, (state, action) => {
+                state.status = "success";
+                state.data = state.data.map(article => article._id === action.payload._id ? action.payload : article);
+                if (state.current && state.current._id === action.payload._id) {
+                    state.current = action.payload;
+                }
+            })
+            .addCase(editArticle.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.error.message;
             })
